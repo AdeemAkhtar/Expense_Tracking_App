@@ -70,16 +70,16 @@ class ExpenseApp(QWidget):
         self.table.setColumnCount(5) #Id, Data, Catagory, Amount, Description
         self.table.setHorizontalHeaderLabels(['Id', 'Data', 'Catagory', 'Amount', 'Description'])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table.sortByColumn(1, Qt.DescendingOrder)
+        self.table.sortByColumn(0, Qt.DescendingOrder)
 
-        self.dropdown.addItems(['Food', 'Transportation', 'Rent', 'Shoppng', 'Enterntainment', 'Bills', 'Others'])
+        self.dropdown.addItems(['Food', 'Transportation', 'Rent', 'Shopping', 'Enterntainment', 'Bills', 'Others'])
         
         # Style Sheet Styling
         self.setStyleSheet(
             """
-                QWidget {backgournd-color: #b8c9e1}
+                QWidget {background-color: #b8c9e1}
 
-                QLable{
+                QLabel{
                     color: #333;
                     font-size : 14px;    
                 }
