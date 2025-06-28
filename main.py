@@ -6,7 +6,52 @@ import sys
 
 # App Class
 class ExpenseApp(QWidget):
+    """
+    A PyQt5-based GUI application for tracking personal expenses.
+
+    This class creates a simple and interactive interface to:
+    - Add expenses with date, category, amount, and description.
+    - Delete selected expenses.
+    - Display all expenses in a table.
+    - Store and retrieve expenses from an SQLite database using Qt's SQL module.
+
+    Attributes
+    ----------
+    date_box : QDateEdit
+        Widget to select the date of the expense.
+    dropdown : QComboBox
+        Dropdown menu for selecting expense categories.
+    amount : QLineEdit
+        Input field for entering the amount of the expense.
+    description : QLineEdit
+        Input field for entering the description of the expense.
+    add_button : QPushButton
+        Button to trigger the addition of a new expense to the database.
+    delete_button : QPushButton
+        Button to delete the selected expense from the database.
+    table : QTableWidget
+        Table that displays the list of expenses from the database.
+    master_layout : QVBoxLayout
+        Main vertical layout for arranging all components.
+    row1, row2, row3 : QHBoxLayout
+        Horizontal layout rows for organizing widgets in the UI.
+
+    Methods
+    -------
+    load_table():
+        Loads all expense records from the database into the table widget.
+    
+    add_expense():
+        Adds a new expense to the database and updates the table.
+
+    delete_expense():
+        Deletes the selected expense from the database and updates the table.
+    """
     def __init__(self):
+        """
+        Initializes the ExpenseApp GUI, sets up UI components, styles, layouts,
+        and connects buttons to their respective slots.
+        """
         super().__init__()
         # Main App Object & Settings
         self.resize(550,500)
@@ -68,8 +113,6 @@ class ExpenseApp(QWidget):
             """
         )
 
-
-
         # Design App With Layouts
         self.master_layout = QVBoxLayout()
         self.row1 = QHBoxLayout()
@@ -108,6 +151,10 @@ class ExpenseApp(QWidget):
 
 
     def load_table(self):
+        """
+        Loads all expenses from the 'expenses' table in the database and
+        populates the table widget with the data.
+        """
         self.table.setRowCount(0)
         query = QSqlQuery("SELECT * FROM expenses")
         row = 0
@@ -129,6 +176,10 @@ class ExpenseApp(QWidget):
             row += 1
     
     def add_expense(self):
+        """
+        Inserts a new expense into the database using the form input values.
+        Clears the input fields and refreshes the table after insertion.
+        """
         date = self.date_box.date().toString("yyyy-MM-dd")
         category = self.dropdown.currentText()
         amount = self.amount.text()
@@ -154,6 +205,10 @@ class ExpenseApp(QWidget):
 
 
     def delete_expense(self):
+        """
+        Deletes the currently selected expense from the database after user confirmation.
+        If no row is selected, a warning is shown. The table is updated after deletion.
+        """
         selected_row = self.table.currentRow()
         if selected_row == -1:
             QMessageBox.warning(self, "No Expense Chosen", "Please choose the expense to delete!")
