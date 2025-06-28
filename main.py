@@ -1,7 +1,7 @@
 # Imports
-from PyQt5.QtWidgets import QApplication, QTableWidgetItem, QMessageBox , QWidget, QLabel, QPushButton, QLineEdit, QComboBox, QDateEdit, QTableWidget, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QTableWidgetItem, QMessageBox, QHeaderView , QWidget, QLabel, QPushButton, QLineEdit, QComboBox, QDateEdit, QTableWidget, QVBoxLayout, QHBoxLayout
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
-from PyQt5.QtCore import QDate
+from PyQt5.QtCore import QDate, Qt
 import sys
 
 # App Class
@@ -13,6 +13,7 @@ class ExpenseApp(QWidget):
         self.setWindowTitle("Expense Tracker 2.0")
 
         self.date_box = QDateEdit()
+        self.date_box.setDate(QDate.currentDate())
         self.dropdown = QComboBox()
         self.amount = QLineEdit()
         self.description = QLineEdit()
@@ -23,8 +24,52 @@ class ExpenseApp(QWidget):
         self.table = QTableWidget()
         self.table.setColumnCount(5) #Id, Data, Catagory, Amount, Description
         self.table.setHorizontalHeaderLabels(['Id', 'Data', 'Catagory', 'Amount', 'Description'])
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.table.sortByColumn(1, Qt.DescendingOrder)
 
         self.dropdown.addItems(['Food', 'Transportation', 'Rent', 'Shoppng', 'Enterntainment', 'Bills', 'Others'])
+        
+        # Style Sheet Styling
+        self.setStyleSheet(
+            """
+                QWidget {backgournd-color: #b8c9e1}
+
+                QLable{
+                    color: #333;
+                    font-size : 14px;    
+                }
+
+                QLineEdit, QComboBox, QDateEdit{
+                    background-color: #b8c9e1;
+                    color = #333;
+                    border: 1px solid #444;
+                    padding: 5px;
+                }
+
+                QTableWidget{
+                    background-color : #b8c9e1;
+                    color: #333;
+                    border: 1px solid #444;
+                    selection-background-color: #ddd;
+                }
+
+                QPushButton{
+                    background-color: #4caf50;
+                    color: #fff;
+                    border: none;
+                    padding: 8px 16px;
+                    font-size: 14px
+                }
+
+                QPushButton:hover{
+                    background-color: #45a049;
+                }    
+
+            """
+        )
+
+
+
         # Design App With Layouts
         self.master_layout = QVBoxLayout()
         self.row1 = QHBoxLayout()
