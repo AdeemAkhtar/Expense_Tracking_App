@@ -25,9 +25,6 @@ class ExpenseApp(QWidget):
         self.table.setHorizontalHeaderLabels(['Id', 'Data', 'Catagory', 'Amount', 'Description'])
 
         self.dropdown.addItems(['Food', 'Transportation', 'Rent', 'Shoppng', 'Enterntainment', 'Bills', 'Others'])
-
-
-
         # Design App With Layouts
         self.master_layout = QVBoxLayout()
         self.row1 = QHBoxLayout()
